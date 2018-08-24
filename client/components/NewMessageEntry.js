@@ -1,10 +1,27 @@
 import React, { Component } from 'react';
+import { sendMessage } from '../store'
+// TODO: use `withRouter` if we have update blocking issues
+import { connect } from 'react-redux'
 
-export default class NewMessageEntry extends Component {
+export class NewMessageEntry extends Component {
+
+  constructor () {
+    super()
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit (event) {
+    event.preventDefault()
+    const message = event.target.content.value
+    this.props.submitMessage({
+      content: message,
+      channelId: this.props.channelId
+    })
+  }
 
   render () {
     return (
-      <form id="new-message-form">
+      <form id="new-message-form" onSubmit={this.handleSubmit}>
         <div className="input-group input-group-lg">
           <input
             className="form-control"
@@ -20,3 +37,9 @@ export default class NewMessageEntry extends Component {
     );
   }
 }
+
+const mapDispatch = dispatch => ({
+  submitMessage: message => dispatch(sendMessage(message))
+})
+
+export default connect(null, mapDispatch)(NewMessageEntry)

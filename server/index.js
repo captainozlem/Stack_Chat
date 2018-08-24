@@ -41,6 +41,7 @@ app.use('*', (req, res, next) =>
 );
 
 // error handling endware
-app.use((err, req, res, next) =>
+app.use((err, req, res, next) => {
+  console.error(err)
   res.status(err.status || 500).send(err.message || 'Internal server error.')
-);
+})
