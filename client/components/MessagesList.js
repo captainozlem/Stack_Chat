@@ -36,7 +36,7 @@ export class MessagesList extends Component {
             <Message message={message} key={message.id} />
           ))}
         </ul>
-        <NewMessageEntry channelId={channelId} />
+        <NewMessageEntry channelId={Number(channelId)} />
       </div>
     )
   }

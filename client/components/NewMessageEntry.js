@@ -31,9 +31,12 @@ export class NewMessageEntry extends Component {
   handleSubmit (evt) {
     evt.preventDefault()
     const content = this.props.newMessageEntry
+
     const channelId = this.props.channelId
-    console.log('this', content, channelId)
-    this.props.post({ content, channelId })
+    const authorId = 1
+
+    this.props.post({ content, authorId, channelId })
+    this.props.newMessageEntry = ''
   }
 
   render () {
