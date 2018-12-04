@@ -33,10 +33,9 @@ export class NewMessageEntry extends Component {
     const content = this.props.newMessageEntry
 
     const channelId = this.props.channelId
-    const authorId = 1
+    const authorId = 4
 
-    this.props.post({ content, authorId, channelId })
-    this.props.newMessageEntry = ''
+    this.props.post({ content, channelId })
   }
 
   render () {
