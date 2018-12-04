@@ -1,8 +1,21 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {writeMessage} from '../store';
 
-export default class NewMessageEntry extends Component {
+const mapStateToProps = state => {
+  return {newMessageEntry: state.newMessageEntry};
+};
 
-  render () {
+const mapDispatchToProps = dispatch => {
+  return {write: () => dispatch(writeMessage())};
+};
+
+export class NewMessageEntry extends Component {
+  handleChange(event) {
+    this.props.write(event.target.value);
+  }
+
+  render() {
     return (
       <form id="new-message-form">
         <div className="input-group input-group-lg">
@@ -10,13 +23,23 @@ export default class NewMessageEntry extends Component {
             className="form-control"
             type="text"
             name="content"
+            value={this.props.newMessageEntry}
+            onChange={this.handleChange}
             placeholder="Say something nice..."
           />
           <span className="input-group-btn">
-            <button className="btn btn-default" type="submit">Chat!</button>
+            <button className="btn btn-default" type="submit">
+              Chat!
+            </button>
           </span>
         </div>
       </form>
     );
   }
 }
+
+const ConnectNewMessageEntry = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewMessageEntry);
+export default ConnectNewMessageEntry;
