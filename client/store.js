@@ -16,7 +16,7 @@ const WRITE_MESSAGE = 'WRITE_MESSAGE';
 const GOT_NEW_MESSAGES_FROM_SERVER = 'GOT_NEW_MESSAGES_FROM_SERVER';
 const SET_NAME = 'SET_NAME';
 
-// action creator
+//Thunk Creator
 export const fetchMessages = () => {
   return async dispatch => {
     const response = await axios.get('/api/messages');
@@ -26,7 +26,9 @@ export const fetchMessages = () => {
   };
 };
 export const postMessage = message => {
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    // when we put getState there, we are changing the name when we write the message
+    message.name = getState().name;
     console.log('message', message);
     const res = await axios.post(`/api/messages`, message);
     const newMessage = res.data;
@@ -36,6 +38,7 @@ export const postMessage = message => {
   };
 };
 
+// action creator
 export const writeMessage = inputContent => ({
   type: WRITE_MESSAGE,
   newMessageEntry: inputContent
